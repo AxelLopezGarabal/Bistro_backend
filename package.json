@@ -1,0 +1,17 @@
+{
+  "name": "bistro",
+  "version": "1.0.0",
+  "description": "Backend of Bistro",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --recursive ./src"
+  },
+  "author": "Axel LG",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^6.2.3"
+  },
+  "dependencies": {
+    "mysql": "^2.18.1"
+  }
+}
