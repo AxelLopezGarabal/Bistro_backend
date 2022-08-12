@@ -34,6 +34,7 @@ class GarnishDao{
             });
         });
         return pro.then((val) => {
+            if(val.length == 0) throw Error("id does not exist");
             return val[0];
         }).then(res => {
                 var garnish = new Garnish(res.idGarnish, res.name, res.price);

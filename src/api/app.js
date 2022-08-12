@@ -1,5 +1,6 @@
 // importing the dependencies
 const testRoutes = require('./routes/testRoute');
+const garnishRoutes = require('./routes/garnishRoutes/GarnishRoute');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -17,6 +18,7 @@ app.use(cors());
 app.use(morgan('combined'));
 
 app.use('/', testRoutes)
+app.use('/api/', garnishRoutes)
 
 .use((req, res, next) => {
     const error = new Error('Not found')
