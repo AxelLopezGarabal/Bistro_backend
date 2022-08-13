@@ -103,6 +103,7 @@ class GarnishDao{
             });
         });
         return pro.then(res => {
+            if (res.length == 0) throw new Error("id does not exist");
             return fild;
         });
     }
