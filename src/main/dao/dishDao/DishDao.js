@@ -34,6 +34,7 @@ class DishDao{
             });
         });
         return pro.then((val) => {
+            if (val.length == 0) throw new Error('Id does not exist');
             return val[0];
         }).then(res => {
                 var dish = new Dish(res.idDish, res.name, res.type, [], res.price, res.image);

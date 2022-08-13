@@ -1,6 +1,7 @@
 // importing the dependencies
 const testRoutes = require('./routes/testRoute');
 const garnishRoutes = require('./routes/garnishRoutes/GarnishRoute');
+const dishRoutes = require('./routes/dishRoutes/DishRoutes');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -17,8 +18,9 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('combined'));
 
-app.use('/', testRoutes)
-app.use('/api/', garnishRoutes)
+app.use('/', testRoutes);
+app.use('/api/', garnishRoutes);
+app.use('/api/', dishRoutes)
 
 .use((req, res, next) => {
     const error = new Error('Not found')
