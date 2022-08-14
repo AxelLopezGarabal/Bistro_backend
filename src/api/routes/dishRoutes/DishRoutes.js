@@ -59,7 +59,24 @@ router.post('/dish=:dishId/relatedToGarnish=:garnishId', (req, res, next) => {
 });
 
 router.put('/dish=:id', (req, res, next) => {
-
+    const temp = req.body;
+    dao.getById(req.params.id).then(dishR => {
+        dishR.setName(temp.name);
+        dishR.setType(temp.price);
+        dishR.setPrice(temp.price);
+        dishR.setImage(temp.image);
+        dao.updateDish(dishR).then(updateRes => {
+            res.send({
+                title: 'The dish has been updates',
+                typeOfRequest: 'PUT',
+                dish_Id: req.params.id,
+                relatedLinks: [
+                    'http://localhost:3001/api/dish='+ req.params.dishId,
+                    'http://localhost:3001/api/dish='+ req.params.dishId+"/garnishes"
+                ]
+            })
+        }).catch(updateErr => {res.send(updateErr.message)});
+    }).catch(getErr => {res.send(getErr.message)});
 });
 
 router.delete('/dish=:id', (req, res, next) => {
