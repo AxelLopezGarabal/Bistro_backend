@@ -3,8 +3,10 @@ const router = express.Router();
 
 const { Garnish } = require('../../../main/model/dish/Garnish');
 const { GarnishDao } = require('../../../main/dao/garnishDao/GarnishDao');
+const { DishGarnishDao } = require('../../../main/dao/relationDao/dishGarnishDao/DishGarnishDao');
 
 const dao = new GarnishDao();
+const daoR = new DishGarnishDao();
 
 router.get('/garnish=:id', (req, res, next) => {
     dao.getById(req.params.id).then(daoResponse => {
@@ -60,15 +62,17 @@ router.put('/garnish=:id', (req, res, next) => {
 });
 
 router.delete('/garnish=:id', (req, res, next) => {
-    dao.deleteGarnish(req.params.id).then(daoResponse => {
-        res.send({
-            title: "The garnish has been deleted",
-            typeOfRequest: "DELETE",
-            targetedId: req.params.id,
+    daoR.deleteGarnishFromAllDishes(req.params.id).then(daoRResponse => {
+        dao.deleteGarnish(req.params.id).then(daoResponse => {
+            res.send({
+                title: "The garnish has been deleted",
+                typeOfRequest: "DELETE",
+                targetedId: req.params.id,
+            });
+        }).catch(err => {
+            res.send(err.message);
         });
-    }).catch(err => {
-        res.send(err.message);
-    });
+    }).catch(daoRErr => {res.send(daoRErr.message)})
 });
 
 module.exports = router;

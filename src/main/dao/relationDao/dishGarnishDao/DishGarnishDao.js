@@ -21,6 +21,10 @@ class DishGarnishDao {
         return this.__deleteAllGarnishes(this.__deleteAllQuery(), [dishId], mysql.createConnection(dbConData));
     }
 
+    deleteGarnishFromAllDishes(garnishId){
+        return this.__deleteGarnishFromAllDishes(this.__deleteGarnishQuery(), [garnishId], mysql.createConnection(dbConData));
+    }
+
     __getAllGarnishes(sql, fild, con){
         let pro = new Promise((resolve,reject) => {
             con.query(sql, fild, function (err, result) {
@@ -97,6 +101,25 @@ class DishGarnishDao {
         
     __deleteAllQuery(){
         return "delete from mydb.DishGarnish where dishId = ?";
+    }
+
+    __deleteGarnishFromAllDishes(sql, fild, con){
+        let pro = new Promise((resolve,reject) => {
+            con.query(sql, fild, function (err, result) {
+                if (err) throw err; 
+                resolve(result);
+
+                con.end();
+            });
+        });
+
+        return pro.then(res => {
+            return res;
+        });
+    }
+        
+    __deleteGarnishQuery(){
+        return "delete from mydb.DishGarnish where garnishId = ?";
     }
 }
 
