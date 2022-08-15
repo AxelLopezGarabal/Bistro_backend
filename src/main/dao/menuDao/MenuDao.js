@@ -9,7 +9,7 @@ class MenuDao{
         return this.__getMenu(this.__selectQuery(), menuId, mysql.createConnection(dbConData));
     }
 
-    saveMenu(menuId){
+    saveMenu(){
         return this.__save(this.__saveQuery(), [], mysql.createConnection(dbConData));
     }
 
