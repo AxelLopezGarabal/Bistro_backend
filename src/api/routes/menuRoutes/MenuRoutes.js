@@ -8,14 +8,16 @@ const dao = new MenuDao();
 const daoR = new MenuDishDao();
 
 router.get('/menu=:id', (req, res, next) => {
-    daoR.getDishes(req.params.id).then(dishesR => {
-        res.send({
-            title: 'The dishes of the menu',
-            typeOfRequest: "GET",
-            menuId: req.params.id,
-            data : dishesR
-        });
-    }).catch(getRErr => {res.send(getRErr.message)});
+    dao.getMenu(req.params.id).then(daoResponse => {
+        daoR.getDishes(req.params.id).then(dishesR => {
+            res.send({
+                title: 'The dishes of the menu',
+                typeOfRequest: "GET",
+                menuId: req.params.id,
+                data : dishesR
+            });
+        }).catch(getRErr => {res.send(getRErr.message)});
+    }).catch(daoErr => {res.send(daoErr.message)});
 });
 
 router.post('/menu', (req, res, next) => {

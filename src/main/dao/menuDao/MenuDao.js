@@ -27,6 +27,7 @@ class MenuDao{
             });
         });
         return pro.then((val) => {
+            if(val.length == 0) throw new Error('id does not exist');
             var temp = new Menu(val[0].idMenu, []);
             return temp;
         });
