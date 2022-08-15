@@ -35,6 +35,7 @@ class EmployeeDao{
             });
         });
         return pro.then((val) => {
+            if(val.length == 0) throw new Error('id does not exist');
             return val[0];
         }).then(res => {
                 var emp = new Employee(res.idEmployee, 0, res.password, res.fullname, res.email, res.phoneNro, res.rank);

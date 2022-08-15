@@ -3,6 +3,7 @@ const testRoutes = require('./routes/testRoute');
 const garnishRoutes = require('./routes/garnishRoutes/GarnishRoute');
 const dishRoutes = require('./routes/dishRoutes/DishRoutes');
 const menuRoutes = require('./routes/menuRoutes/MenuRoutes');
+const employeeRoutes = require('./routes/employeeRoutes/EmployeeRoutes');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -22,7 +23,8 @@ app.use(morgan('combined'));
 app.use('/', testRoutes);
 app.use('/api/', garnishRoutes);
 app.use('/api/', dishRoutes);
-app.use('/api/', menuRoutes)
+app.use('/api/', menuRoutes);
+app.use('/api/', employeeRoutes)
 
 .use((req, res, next) => {
     const error = new Error('Not found')
