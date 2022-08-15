@@ -3,10 +3,12 @@ const router = express.Router();
 
 const { DishDao } = require('../../../main/dao/dishDao/DishDao');
 const { DishGarnishDao } = require('../../../main/dao/relationDao/dishGarnishDao/DishGarnishDao');
+const { MenuDishDao } = require('../../../main/dao/relationDao/menuDishDao/MenuDishDao');
 const { Dish } = require('../../../main/model/dish/Dish');
 
 const dao = new DishDao();
 const daoR = new DishGarnishDao();
+const daoM = new MenuDishDao();
 
 router.get('/dish=:id', (req, res, next) => {
     dao.getById(req.params.id).then(dishR => {
@@ -15,7 +17,7 @@ router.get('/dish=:id', (req, res, next) => {
             typeOfRequest: "GET",
             data : dishR
         });
-    }).catch(getErr => {res.send(getErr);});
+    }).catch(getErr => {res.send(getErr.message);});
 });
 
 router.get('/dish=:id/garnishes', (req, res, next) => {
@@ -80,15 +82,17 @@ router.put('/dish=:id', (req, res, next) => {
 });
 
 router.delete('/dish=:id', (req, res, next) => {
-    daoR.deleteGarnishes(req.params.id).then(deleteRRes=> {
-        dao.deleteDish(req.params.id).then(deleteRes => {
-            res.send({
-                title: 'The dish has been deleted',
-                typeOfRequest: 'DELETE',
-                dish_Id: req.params.id
-            });
-        }).catch(deleteErr => {res.send(deleteErr.message)});
-    }).catch(deleteRErr => {res.send(deleteRErr.message)});
+    daoM.deleteDishRelation(req.params.id).then(daoMRes => {
+        daoR.deleteGarnishes(req.params.id).then(deleteRRes=> {
+            dao.deleteDish(req.params.id).then(deleteRes => {
+                res.send({
+                    title: 'The dish has been deleted',
+                    typeOfRequest: 'DELETE',
+                    dish_Id: req.params.id
+                });
+            }).catch(deleteErr => {res.send(deleteErr.message)});
+        }).catch(deleteRErr => {res.send(deleteRErr.message)});
+    }).catch(daoMErr => {res.send(daoMErr.message)});
 });
 
 module.exports = router;

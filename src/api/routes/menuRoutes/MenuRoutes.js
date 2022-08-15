@@ -51,6 +51,17 @@ router.delete('/menu=:id', (req, res, next) => {
             });
         }).catch(daoErr => {res.send(daoErr.message)});
     }).catch(deleteRErr => {res.send(deleteRErr.message)});
+});
+
+router.delete('/menu=:menuId/dish=:dishId', (req, res, next) => {
+    daoR.deleteDish(req.params.menuId, req.params.menuId).then(daoRRes => {
+        res.send({
+            title: 'The dish has been deleted from the menu',
+            typeOfRequest: 'DELETE',
+            menu_Id: req.params.menuId,
+            dish_Id: req.params.dishId
+        });
+    }).catch(daoRErr => {res.send(daoRErr.message)});
 })
 
 module.exports = router;

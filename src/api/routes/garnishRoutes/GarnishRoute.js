@@ -72,7 +72,7 @@ router.delete('/garnish=:id', (req, res, next) => {
         }).catch(err => {
             res.send(err.message);
         });
-    }).catch(daoRErr => {res.send(daoRErr.message)})
+    }).catch(daoRErr => {res.send(daoRErr.message)});
 });
 
 module.exports = router;

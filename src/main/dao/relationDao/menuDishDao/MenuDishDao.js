@@ -17,6 +17,10 @@ class MenuDishDao {
         return this.__delete(this.__deleteQuery(menuId, dishId), mysql.createConnection(dbConData));
     }
 
+    deleteDishRelation(dishId){
+        return this.__delete(this.__deleteDishes(dishId), mysql.createConnection(dbConData));
+    }
+
     deleteDishes(menuId){
         return this.__deleteAllDishes(this.__deleteAllQuery(), [menuId], mysql.createConnection(dbConData));
     }
@@ -99,6 +103,10 @@ class MenuDishDao {
         
     __deleteAllQuery(){
         return "delete from mydb.MenuDish where menuId = ?";
+    }
+
+    __deleteDishes(dishId){
+        return "delete from mydb.MenuDish where dishId =" + mysql.escape(dishId);
     }
 
 }
